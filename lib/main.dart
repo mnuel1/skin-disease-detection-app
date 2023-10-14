@@ -1,17 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:sample1/screens/index.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       home: SplashScreen(),
     );
   }
 }
 
 class SplashScreen extends StatefulWidget {
+  const SplashScreen({super.key});
+
   @override
   _SplashScreenState createState() => _SplashScreenState();
 }
@@ -31,10 +36,10 @@ class _SplashScreenState extends State<SplashScreen>
 
     _animationController.forward(); // Start the animation
 
-    Future.delayed(Duration(seconds: 2), () {
+    Future.delayed(const Duration(seconds: 2), () {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => HomeScreen()),
+        MaterialPageRoute(builder: (context) => const HomeScreen()),
       );
     });
   }
@@ -61,9 +66,9 @@ class _SplashScreenState extends State<SplashScreen>
             children: <Widget>[
               // Logo
               Image.asset('assets/image 9.png', height: 100, width: 100),
-              SizedBox(height: 16.0), // Spacer
+              const SizedBox(height: 16.0), // Spacer
               // Text
-              Text(
+              const Text(
                 'Descry',
                 style: TextStyle(
                   fontSize: 36.0,
@@ -79,74 +84,4 @@ class _SplashScreenState extends State<SplashScreen>
   }
 }
 
-class HomeScreen extends StatefulWidget {
-  @override
-  _HomeScreenState createState() => _HomeScreenState();
-}
 
-class _HomeScreenState extends State<HomeScreen> {
-  int _currentIndex = 0;
-
-  final List<Widget> _pages = [
-    BlankPage(title: 'Home'),
-    BlankPage(title: 'Scan'),
-    BlankPage(title: 'Remedies'),
-    BlankPage(title: 'Profile'),
-  ];
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Center(child: Image.asset('assets/image 9.png', height: 30, width: 30)), // Logo
-      ),
-      body: _pages[_currentIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.scanner),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.healing),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: '',
-          ),
-        ],
-        currentIndex: _currentIndex,
-        selectedItemColor: Colors.blue,
-        unselectedItemColor: Colors.black,
-        onTap: (index) {
-          setState(() {
-            _currentIndex = index;
-          });
-        },
-      ),
-    );
-  }
-}
-
-class BlankPage extends StatelessWidget {
-  final String title;
-
-  const BlankPage({required this.title});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(title),
-      ),
-      body: Center(
-        child: Text('$title Page'),
-      ),
-    );
-  }
-}
