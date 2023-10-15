@@ -1,3 +1,3 @@
 export 'home.dart';
-// export 'screen2.dart';
-// export 'screen3.dart';
+export 'activity_log.dart';
+export 'main.dart';

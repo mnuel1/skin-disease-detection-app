@@ -1,9 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:sample1/screens/index.dart';
 
+class Navigation extends StatefulWidget {
 
-class Navigation extends StatelessWidget {
+  final Function(int) onItemTapped; // Callback to notify the parent
 
-  const Navigation({super.key});
+  const Navigation({Key? key, required this.onItemTapped}) : super(key: key);
+
+  @override
+  _Navigation createState() => _Navigation();
+}
+
+class _Navigation extends State<Navigation> {
 
   @override
   Widget build(BuildContext context) {
@@ -43,9 +51,7 @@ class Navigation extends StatelessWidget {
           selectedItemColor: Colors.blue,
           unselectedItemColor: Colors.black,
           onTap: (index) {
-            // setState(() {
-            //   currentIndex = index;
-            // });
+            widget.onItemTapped(index); // Notify the parent of item selection
           },
         ),
       );

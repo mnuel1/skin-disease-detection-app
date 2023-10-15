@@ -12,41 +12,39 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
 
-
-  final List<Widget> _pages = [
-    const BlankPage(title: 'Home'),
-    const BlankPage(title: 'Scan'),
-    const BlankPage(title: 'Remedies'),
-    const BlankPage(title: 'Profile'),
-  ];
-
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       // appBar: AppBar(
-      //   // title: Center(child: Image.asset('assets/image 9.png', height: 30, width: 30)), // Logo
+      //   title: Center(child: Image.asset('assets/image 9.png', height: 100, width: 225)), // Logo
+      //   backgroundColor: Colors.transparent,
+      //   // height:200,
       // ),
       body: Padding(
-        padding: EdgeInsets.all(30.0),
+        padding: const EdgeInsets.all(30.0),
         child: Column(
-            mainAxisAlignment: MainAxisAlignment.center, // Center the Row horizontally
-            children: [
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: 8.0), // Gap between HomeBoxWidgets
-                child: HomeBoxWidget(label: 'Scan and analyze',dirIcon:'assets/image 8.png'),
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: 8.0), // Gap between HomeBoxWidgets
-                child: HomeBoxWidget(label: 'Home Remedies',dirIcon:'assets/homeremedies.jpg'),
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: 8.0), // Gap between HomeBoxWidgets
-                child: HomeBoxWidget(label: 'History',dirIcon:'assets/image7.jfif'),
-              ),
-            ],
-          ),
+          // mainAxisAlignment: MainAxisAlignment.center, // Center the Row horizontally
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0), // Gap between HomeBoxWidgets
+              child: Image.asset('assets/image 9.png', height: 100, width: 225),
+            ),
+            const Padding(
+              padding: EdgeInsets.symmetric(vertical: 8.0), // Gap between HomeBoxWidgets
+              child: HomeBoxWidget(label: 'Scan and analyze',dirIcon:'assets/image 8.png'),
+            ),
+            const Padding(
+              padding: EdgeInsets.symmetric(vertical: 8.0), // Gap between HomeBoxWidgets
+              child: HomeBoxWidget(label: 'Home Remedies',dirIcon:'assets/homeremedies.jpg'),
+            ),
+            const Padding(
+              padding: EdgeInsets.symmetric(vertical: 8.0), // Gap between HomeBoxWidgets
+              child: HomeBoxWidget(label: 'History',dirIcon:'assets/image7.jfif'),
+            ),
+          ],
+        ),
       ),
-        bottomNavigationBar: Navigation()
+      // bottomNavigationBar: Navigation()
     );
   }
 }
