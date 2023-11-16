@@ -1,21 +1,54 @@
 import 'package:flutter/material.dart';
+import 'package:sample1/widgets/index.dart';
 
+class ActivityLogScreen extends StatelessWidget {
 
-class ActivityLogScreen extends StatefulWidget {
-  const ActivityLogScreen({super.key});
+  const ActivityLogScreen({Key? key}) : super(key: key);
 
-  @override
-  _ActivityLogScreen createState() => _ActivityLogScreen();
-
-}
-
-class _ActivityLogScreen extends State<ActivityLogScreen> {
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    return Scaffold(
 
+    return Scaffold(
+        body: Padding(
+          padding: const EdgeInsets.all(30.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                // constraints: BoxConstraints.expand(
+                //   height: Theme.of(context).textTheme.headlineMedium!.fontSize! + 10.0,
+                // ),
+                padding: const EdgeInsets.all(5.0),
+                alignment: Alignment.center,
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        decoration: const BoxDecoration(
+                          color: Color.fromARGB(127, 124, 102, 0), // Replace with your desired gradient colors
+                        ),
+                        child: const Padding(
+                          padding: EdgeInsets.all(8.0), // Add your desired padding
+                          child: Text(
+                            'Activity Log',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ]
+                ),
+              ),
+              Expanded(
+                child: ActivityLogList(),
+              ),
+            ],
+          )
+        )
     );
+
   }
-  
 }
+
