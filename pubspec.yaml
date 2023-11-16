@@ -31,14 +31,22 @@ dependencies:
   flutter:
     sdk: flutter
 
-
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
+  image_picker: ^0.8.6
+  camera: ^0.10.5+5
+  carousel_slider: ^4.0.0-nullsafety.0
+  google_fonts: ^6.1.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons: ^0.13.1
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/image 9.png"
+
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -63,6 +71,15 @@ flutter:
     - assets/image 8.png
     - assets/homeremedies.jpg
     - assets/image7.jfif
+    - assets/scan_icon.png
+    - assets/upload_icon.png
+    - assets/flip_icon.png
+    - assets/ImageCarousel/Basalcellcarcinoma.JPG
+    - assets/ImageCarousel/Dermatofibroma.JPG
+    - assets/ImageCarousel/Melanocyticnevil.JPG
+    - assets/ImageCarousel/Melanoma.JPG
+    - assets/ImageCarousel/Pyogenicgranulomasandhemorrhage.JPG
+    - assets/ImageCarousel/Sebhorrickeratosis.JPG
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg

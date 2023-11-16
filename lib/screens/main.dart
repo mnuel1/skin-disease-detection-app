@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:sample1/screens/index.dart';
-
 import 'package:sample1/layout/index.dart';
 
 class MainScreen extends StatefulWidget {
@@ -16,8 +15,9 @@ class _MainScreen extends State<MainScreen> {
   // List of pages to display
   final List<Widget> _pages = [
     const HomeScreen(),
+    ScanScreen(),
+    RemediesScreen(),
     const ActivityLogScreen(),
-    // const BlankPage(title: 'Remedies'),
     // const BlankPage(title: 'Scan'),
     // const BlankPage(title: 'Profile'),
   ];
