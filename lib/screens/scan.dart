@@ -2,6 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:camera/camera.dart';
+import 'package:tflite_flutter/tflite_flutter.dart' as tfl;
+import 'package:image/image.dart' as img;
+import 'package:flutter/services.dart' show rootBundle;
+import 'dart:typed_data';
+
 
 class ScanScreen extends StatefulWidget {
   @override
@@ -51,6 +56,7 @@ class _ScanScreenState extends State<ScanScreen> {
       setState(() {
         _selectedImage = File(pickedImage.path);
       });
+      processImage(File(pickedImage.path));
     }
   }
 
@@ -61,6 +67,103 @@ class _ScanScreenState extends State<ScanScreen> {
         _selectedImage = File(pickedImage.path);
       });
     }
+  }
+  void processImage(File imageFile) async {
+    print("Processing captured image: ${imageFile.path}");
+
+    final interpreter = await tfl.Interpreter.fromAsset('assets/model/model.tflite');
+
+    File testImageFile = File(imageFile.path);
+
+    List<List<List<int>>> imgArray = await preprocessImage(testImageFile);
+
+    var input = List.filled(1 * 28 * 28 * 3, 0.0).reshape([1, 28, 28, 3]);
+
+    // Flatten the 3D array to a 1D list
+    var flatInput = imgArray.expand((row) => row.expand((pixels) => pixels.map((value) => value.toDouble())).toList()).toList();
+
+    // Copy the values from flatInput to the input tensor
+    for (int i = 0; i < flatInput.length; i++) {
+      input[0][i ~/ (28 * 3)][(i ~/ 3) % 28][i % 3] = flatInput[i];
+    }
+
+    var output = List.filled(1 * 7, 0.0).reshape([1, 7]);
+    interpreter.run(input, output);
+
+    // Get the class label with the highest probability
+    int predictedClassIndex = output[0].indexOf(output[0].reduce((a, b) => (a as double) > (b as double) ? a : b));
+
+    // Map of class labels
+    Map<int, List<String>> classLabels = {
+      4: ['nv', ' melanocytic nevi'],
+      6: ['mel', 'melanoma'],
+      2: ['bkl', 'benign keratosis-like lesions'],
+      1: ['bcc', ' basal cell carcinoma'],
+      5: ['vasc', ' pyogenic granulomas and hemorrhage'],
+      0: ['akiec', 'Actinic keratoses and intraepithelial carcinomae'],
+      3: ['df', 'dermatofibroma']
+    };
+
+    // Print the predicted class and confidence score
+    List<String> predictedClass = classLabels[predictedClassIndex] ?? ['Unknown', ''];
+    double confidenceScore = output[0][predictedClassIndex];
+
+    print('Predicted Class: ${predictedClass[0]} - ${predictedClass[1]}');
+    print('Confidence Score: $confidenceScore');
+
+
+    // Show a dialog with the predicted class
+    showDialog(
+      context: context, // Replace 'context' with the actual context where you want to show the dialog
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Prediction Result'),
+          content: Column(
+            children: [
+              Text('Predicted Class: ${predictedClass[0]}'),
+              Text('Description: ${predictedClass[1]}'),
+              // Text('Confidence Score: $confidenceScore'),
+            ],
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<List<List<List<int>>>> preprocessImage(File imageFile) async {
+    // Read the file content and convert it to a Uint8List
+    Uint8List bytes = await imageFile.readAsBytes();
+    // Decode the image
+    img.Image? originalImage = img.decodeImage(bytes);
+
+    // Resize the image to 28x28
+    img.Image resizedImage = img.copyResize(originalImage!, width: 28, height: 28);
+
+    // Convert the image to a 3D array
+    List<List<List<int>>> imgArray = [];
+    for (int y = 0; y < resizedImage.height; y++) {
+      List<List<int>> row = [];
+      for (int x = 0; x < resizedImage.width; x++) {
+        final pixel = resizedImage.getPixel(x, y);
+        List<int> pixels = [
+          pixel.r.toInt(), // Cast to int
+          pixel.g.toInt(), // Cast to int
+          pixel.b.toInt(), // Cast to int
+        ];
+        row.add(pixels);
+      }
+      imgArray.add(row);
+    }
+
+    return imgArray;
   }
 
   @override
@@ -94,13 +197,14 @@ class _ScanScreenState extends State<ScanScreen> {
                 ),
                 SizedBox(height: MediaQuery.of(context).size.width * 0.03),
                 Text(
-                  'Make sure your face is inside the screen.',
+                  'Make sure the affected skin is inside the screen.',
                   style: TextStyle(
                     fontSize: MediaQuery.of(context).size.width * 0.04,
                     fontWeight: FontWeight.normal,
                     color: Colors.grey,
                   ),
                 ),
+
               ],
             ),
           ),
@@ -165,6 +269,7 @@ class _ScanScreenState extends State<ScanScreen> {
               if (mounted && file != null) {
                 if (file != null) {
                   print("Picture saved to ${file.path}");
+                  processImage(File(file.path));
                 }
               }
             });

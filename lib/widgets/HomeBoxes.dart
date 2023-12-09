@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 
 
-
 class HomeBoxWidget extends StatelessWidget{
 
   final String label;
@@ -16,7 +15,6 @@ class HomeBoxWidget extends StatelessWidget{
     return Container(
         decoration: BoxDecoration(
           border: Border.all(
-            color: Colors.blue, // Border color
             width: 2.0,         // Border width
           ),
           borderRadius: BorderRadius.circular(15.0), // Border radius
@@ -27,39 +25,8 @@ class HomeBoxWidget extends StatelessWidget{
         padding: const EdgeInsets.all(5.0),
 
         alignment: Alignment.center,
-        child: Column(
-          children: [
-            Container(
-              child: Image.asset(dirIcon,height: 30, width: 30),
-            ),
-            Container(decoration: BoxDecoration(
-              border: Border.all(
-                color: Colors.blue, // Border color
-                width: 2.0,         // Border width
-              ),
-            ),
+        child: Text(label),
 
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                    child: Text(label),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                    child: IconButton(
-                      icon: const Icon(Icons.home),
-                      onPressed: () {
-                        // Add your button's action here
-                      },
-                    )
-                  ),
-                ],
-              ),
-            )
-          ],
-        )
 
     );
   }

@@ -14,12 +14,10 @@ class _MainScreen extends State<MainScreen> {
 
   // List of pages to display
   final List<Widget> _pages = [
-    const HomeScreen(),
     ScanScreen(),
     RemediesScreen(),
-    const ActivityLogScreen(),
-    // const BlankPage(title: 'Scan'),
-    // const BlankPage(title: 'Profile'),
+    // const ActivityLogScreen(),
+
   ];
 
   // Function to handle item selection in the bottom navigation bar

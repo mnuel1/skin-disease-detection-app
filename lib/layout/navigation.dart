@@ -34,18 +34,18 @@ class _Navigation extends State<Navigation> {
               icon: Icon(Icons.home),
               label: '',
             ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.scanner),
-              label: '',
-            ),
+            // BottomNavigationBarItem(
+            //   icon: Icon(Icons.scanner),
+            //   label: '',
+            // ),
             BottomNavigationBarItem(
               icon: Icon(Icons.healing),
               label: '',
             ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.person),
-              label: '',
-            ),
+            // BottomNavigationBarItem(
+            //   icon: Icon(Icons.person),
+            //   label: '',
+            // ),
           ],
           currentIndex: currentIndex,
           selectedItemColor: Colors.blue,
